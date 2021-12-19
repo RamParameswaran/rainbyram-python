@@ -1,0 +1,2 @@
+# boto3==1.20.24 ## Note: boto3 is automatically included in the AWS Lambda Python runtime.
+requests==2.26.0

@@ -16,7 +16,8 @@ Globals:
 Resources:
   SnsTopic:
     Type: AWS::SNS::Topic
-    TopicName: UhOhItsGonnaRainMessages
+    Properties:
+      TopicName: UhOhItsGonnaRainMessages
     
   UhohItsGonnaRainTodayFunction:
     Type: AWS::Serverless::Function

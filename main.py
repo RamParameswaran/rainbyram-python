@@ -5,6 +5,7 @@ import boto3
 
 omw_api_key = os.environ.get("OMW_API_KEY")
 snsclient = boto3.client("sns")
+topic = snsclient.Topic(os.environ.get("SNS_TOPIC_ARN"))
 
 
 def lambda_handler(event, lambda_context):
@@ -37,7 +38,7 @@ def lambda_handler(event, lambda_context):
             count += 1
 
     if count > 0:
-        response = snsclient.publish(
+        response = topic.publish(
             PhoneNumber=phone_number,
             Message="Its going to rain today! â›ˆ Make sure you bring an â˜‚ï¸!",
         )

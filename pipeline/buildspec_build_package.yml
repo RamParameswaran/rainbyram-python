@@ -15,7 +15,7 @@ phases:
       - . ./assume-role.sh ${TESTING_PIPELINE_EXECUTION_ROLE} test-package
       - sam package --s3-bucket ${TESTING_ARTIFACT_BUCKET} --output-template-file packaged-test.yaml
       - . ./assume-role.sh ${PROD_PIPELINE_EXECUTION_ROLE} prod-package
-      - echo '${PROD_ARTIFACT_BUCKET}'
+      - echo "PROD_ARTIFACT_BUCKET is ${PROD_ARTIFACT_BUCKET}."
       - sam package --s3-bucket ${PROD_ARTIFACT_BUCKET} --output-template-file packaged-prod.yaml
 artifacts:
   files:

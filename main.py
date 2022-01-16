@@ -3,7 +3,7 @@ import requests
 import os
 import boto3
 
-omw_api_key = os.environ.get("MY_API_KEY")
+omw_api_key = os.environ.get("OMW_API_KEY")
 snsclient = boto3.client("sns")
 
 

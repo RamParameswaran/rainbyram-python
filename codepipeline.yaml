@@ -74,7 +74,7 @@ Parameters:
     Default: "arn:aws:iam::698248325687:role/aws-sam-cli-managed-test-CloudFormationExecutionR-UKW65NEWRRJR"
   ProdArtifactBucket:
     Type: String
-    Default: ""
+    Default: "aws-sam-cli-managed-test-pipeline-artifactsbucket-nblvquiwq8o0"
   ProdImageRepository:
     Type: String
     # If there are functions with "Image" PackageType in your template,

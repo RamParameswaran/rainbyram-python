@@ -3,7 +3,8 @@ phases:
   install:
     runtime-versions:
       python: 3.8
+    commands:
+      - pip install pytest
   build:
     commands:
-      # trigger the unit tests here
-      - echo 'Running unit tests'
+      - pytest 

@@ -141,7 +141,7 @@ Resources:
                       {"name": "ENV_BUCKET", "value": "${ProdArtifactBucket}"}
                     ]
                 InputArtifacts:
-                  - Name: BuildArtifactAsZip
+                  - Name: SourceCodeAsZip
           - !Ref AWS::NoValue
 
   PipelineArtifactsBucket:
@@ -240,10 +240,6 @@ Resources:
                   - "codebuild:BatchGetBuilds"
                 Resource:
                   - !GetAtt CodeBuildProjectUnitTest.Arn
-                  - !If
-                    - IsMainBranchPipeline
-                    - !GetAtt CodeBuildProjectBuildAndPackage.Arn
-                    - !Ref AWS::NoValue
                   - !If
                     - IsMainBranchPipeline
                     - !GetAtt CodeBuildProjectDeploy.Arn

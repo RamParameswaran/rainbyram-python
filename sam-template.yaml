@@ -39,6 +39,10 @@ Resources:
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Ref ApiKeySecretManagerARN
       Events:
-        Name: Daily8amSchedule
-        Description: Triggers daily at 8am (GMT+10)
-        Schedule: cron(0 22 * * ? *)
+        DailySchedule:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 22 * * ? *)
+            Name: Daily8amSchedule
+            Description: Triggers daily at 8am (GMT+10)
+            Enabled: True

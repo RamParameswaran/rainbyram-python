@@ -1,5 +1,5 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Transform: 'AWS::Serverless-2016-10-31'
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
 
 Globals:
   Function:
@@ -9,26 +9,32 @@ Globals:
     Environment:
       Variables:
         TABLE_NAME: data-table
-    Tags: 
+    Tags:
       ApplicationName: "UhohItsGonnaRainToday"
       Owner: "Ram"
+
+Parameters:
+  Api_Key_SecretManager_ARN:
+    Type: String
+    Default: arn:aws:secretsmanager:ap-southeast-2:698248325687:secret:OpenWeatherMapApiKey-lNcxq6
 
 Resources:
   SnsTopic:
     Type: AWS::SNS::Topic
     Properties:
       TopicName: UhOhItsGonnaRainMessages
-    
+
   UhohItsGonnaRainTodayFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: UhohItsGonnaRainToday
       Environment:
         Variables:
-          OMW_API_KEY: '{{resolve:secretsmanager:OpenWeatherMapApiKey:SecretString:ApiKey}}'
+          OMW_API_KEY_SECRETSMANAGER_ARN: !Ref Api_Key_SecretManager_ARN
           SNS_TOPIC_ARN: !GetAtt SnsTopic.TopicName
       PackageType: Zip
       Policies:
-      - SNSPublishMessagePolicy:
-          TopicName:
-            !GetAtt SnsTopic.TopicName
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt SnsTopic.TopicName
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Ref Api_Key_SecretManager_ARN

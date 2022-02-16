@@ -31,12 +31,14 @@ Resources:
       Environment:
         Variables:
           OMW_API_KEY_SECRETSMANAGER_ARN: !Ref ApiKeySecretManagerARN
-          SNS_TOPIC_ARN: !GetAtt SnsTopic.TopicName
+          SNS_TOPIC_ARN: !Ref SnsTopic
       PackageType: Zip
       Policies:
         - SNSPublishMessagePolicy:
             TopicName: !GetAtt SnsTopic.TopicName
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Ref ApiKeySecretManagerARN
-      # Events:
-      #   Description: Triggers daily at 8am (Australia/Sydney local time)
+      Events:
+        Name: Daily8amSchedule
+        Description: Triggers daily at 8am (GMT+10)
+        Schedule: cron(0 22 * * ? *)

@@ -38,5 +38,5 @@ Resources:
             TopicName: !GetAtt SnsTopic.TopicName
         - AWSSecretsManagerGetSecretValuePolicy:
             SecretArn: !Ref ApiKeySecretManagerARN
-      Events:
-        Description: Triggers daily at 8am (Australia/Sydney local time)
+      # Events:
+      #   Description: Triggers daily at 8am (Australia/Sydney local time)

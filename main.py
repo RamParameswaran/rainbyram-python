@@ -46,7 +46,7 @@ def lambda_handler(event, lambda_context):
         if i < 700:
             count += 1
 
-    if not count > 0:
+    if count > 0:
         tomorrow = datetime.datetime.today() + datetime.timedelta(hours=10)
         current_date_string = tomorrow.strftime("%d-%m-%Y")
         sns_response = snsclient.publish(

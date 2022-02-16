@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion : '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: >
   This template deploys a CodePipeline with its required resources.
 
@@ -11,7 +11,6 @@ Description: >
   - CodeBuildServiceRole
   - CodeBuildProjectUnitTest
   - CodeBuildProjectDeploy
-
 
 Parameters:
   GitProviderType:
@@ -90,9 +89,19 @@ Resources:
                 Provider: CodeStarSourceConnection
                 Version: "1"
               Configuration:
-                ConnectionArn: !If [CreateConnection, !Ref CodeStarConnection, !Ref CodeStarConnectionArn]
+                ConnectionArn:
+                  !If [
+                    CreateConnection,
+                    !Ref CodeStarConnection,
+                    !Ref CodeStarConnectionArn,
+                  ]
                 FullRepositoryId: !Ref FullRepositoryId
-                BranchName: !If [IsFeatureBranchPipeline, !Ref FeatureGitBranch, !Ref MainGitBranch]
+                BranchName:
+                  !If [
+                    IsFeatureBranchPipeline,
+                    !Ref FeatureGitBranch,
+                    !Ref MainGitBranch,
+                  ]
               OutputArtifacts:
                 - Name: SourceCodeAsZip
               RunOrder: 1
@@ -166,7 +175,7 @@ Resources:
             Action: "s3:*"
             Principal: "*"
             Resource:
-              - !Sub  "${PipelineArtifactsBucket.Arn}/*"
+              - !Sub "${PipelineArtifactsBucket.Arn}/*"
               - !GetAtt PipelineArtifactsBucket.Arn
             Condition:
               Bool:
@@ -209,7 +218,12 @@ Resources:
               - Effect: Allow
                 Action:
                   - "codestar-connections:UseConnection"
-                Resource: !If [CreateConnection, !Ref CodeStarConnection, !Ref CodeStarConnectionArn]
+                Resource:
+                  !If [
+                    CreateConnection,
+                    !Ref CodeStarConnection,
+                    !Ref CodeStarConnectionArn,
+                  ]
         - PolicyName: CodePipelineCodeAndS3Bucket
           PolicyDocument:
             Version: "2012-10-17"
@@ -229,7 +243,6 @@ Resources:
                 Effect: Allow
                 Resource:
                   Fn::Sub: ${PipelineArtifactsBucket.Arn}/*
-
         - PolicyName: CodePipelineCodeBuildAndCloudformationAccess
           PolicyDocument:
             Version: "2012-10-17"
@@ -259,7 +272,13 @@ Resources:
                   - "cloudformation:ValidateTemplate"
                 Resource:
                   - !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${AWS::StackName}/*"
-
+        - PolicyName: "AllowEventsPolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action: "events:*"
+                Resource: "*"
   #   ____          _      ____        _ _     _
   #  / ___|___   __| | ___| __ ) _   _(_| | __| |
   # | |   / _ \ / _` |/ _ |  _ \| | | | | |/ _` |

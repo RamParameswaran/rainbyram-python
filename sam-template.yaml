@@ -42,7 +42,7 @@ Resources:
         DailySchedule:
           Type: Schedule
           Properties:
-            Schedule: cron(0 22 * * ? *)
+            Schedule: cron(30 20 * * ? *)
             Name: Daily8amSchedule
-            Description: Triggers daily at 8am (GMT+10)
+            Description: Triggers daily at 630am (GMT+10)
             Enabled: True

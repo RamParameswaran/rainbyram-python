@@ -21,7 +21,6 @@ def lambda_handler(event, lambda_context):
     # Arguments
     latitude_degrees = LAT
     longitude_degrees = LON
-    print(omw_api_key)
 
     OPEN_WM = "https://api.openweathermap.org/data/2.5/onecall"
     parameters = {
@@ -34,10 +33,11 @@ def lambda_handler(event, lambda_context):
     response = requests.get(OPEN_WM, params=parameters)
     response.raise_for_status()
     weather_data = response.json()
-    hour_list = weather_data["hourly"]
+    print(weather_data)
 
+    hour_list = weather_data["hourly"]
     weather_12_hour = []
-    for i in range(0, 11):
+    for i in range(0, 13):
         code = weather_data["hourly"][i]["weather"][0]["id"]
         weather_12_hour.append(code)
 
